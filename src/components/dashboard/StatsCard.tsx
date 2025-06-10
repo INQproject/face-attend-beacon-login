@@ -1,35 +1,42 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { LucideIcon } from 'lucide-react';
+import { Users, UserCheck, UserX, User } from 'lucide-react';
 
 interface StatsCardProps {
   title: string;
   value: string;
-  icon: LucideIcon;
-  trend: string;
-  color: 'blue' | 'green' | 'yellow' | 'red';
+  subtitle?: string;
+  icon: 'users' | 'user-check' | 'user-x' | 'user';
+  iconColor: string;
+  iconBg: string;
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon: Icon, trend, color }) => {
-  const colorClasses = {
-    blue: 'text-blue-600 bg-blue-100',
-    green: 'text-attendance-green bg-attendance-green-light',
-    yellow: 'text-yellow-600 bg-yellow-100',
-    red: 'text-red-600 bg-red-100',
-  };
+const iconMap = {
+  'users': Users,
+  'user-check': UserCheck,
+  'user-x': UserX,
+  'user': User,
+};
+
+const StatsCard: React.FC<StatsCardProps> = ({ title, value, subtitle, icon, iconColor, iconBg }) => {
+  const IconComponent = iconMap[icon];
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="bg-white border border-gray-200 hover:shadow-sm transition-shadow">
       <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-attendance-text-light">{title}</p>
-            <p className="text-2xl font-bold text-attendance-text mt-1">{value}</p>
-            <p className="text-xs text-attendance-text-light mt-2">{trend}</p>
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <p className="text-sm text-gray-500 mb-2">{title}</p>
+            <div className="flex items-baseline space-x-1">
+              <p className="text-2xl font-semibold text-gray-900">{value}</p>
+              {subtitle && (
+                <p className="text-lg text-gray-900">{subtitle}</p>
+              )}
+            </div>
           </div>
-          <div className={`p-3 rounded-full ${colorClasses[color]}`}>
-            <Icon className="w-6 h-6" />
+          <div className={`p-3 rounded-lg ${iconBg}`}>
+            <IconComponent className={`w-6 h-6 ${iconColor}`} />
           </div>
         </div>
       </CardContent>
