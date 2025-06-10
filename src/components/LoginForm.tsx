@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Eye, EyeOff, User, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,7 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-const LoginForm = () => {
+interface LoginFormProps {
+  onLoginSuccess: () => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +23,7 @@ const LoginForm = () => {
     setTimeout(() => {
       console.log('Login attempted with:', { email, password });
       setIsLoading(false);
-      // Here you would typically handle the actual login logic
+      onLoginSuccess();
     }, 1500);
   };
 
